@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ana, imam pitanjeee</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Ana, imam pitanje</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
@@ -16,18 +16,22 @@
     --text:#4A4A4A;
 }
 
-*{ box-sizing:border-box; }
+*{ box-sizing:border-box; margin: 0; padding: 0; }
 
 body{
     margin:0;
-    min-height:100vh;
+    /* Koristimo dvh (dynamic viewport height) da popravi centriranje na mobilnim browserima */
+    min-height: 100dvh;
+    width: 100%;
     font-family:'Press Start 2P', cursive;
     background:var(--cream);
     color:var(--text);
     display:flex;
+    flex-direction: column;
     justify-content:center;
     align-items:center;
     overflow:hidden;
+    position: relative;
 }
 
 /* ================= BACKGROUND TULIPS ================= */
@@ -36,6 +40,7 @@ body{
     inset:0;
     pointer-events:none;
     opacity:0.25;
+    z-index: 1;
 }
 
 /* real tulip shape */
@@ -63,30 +68,33 @@ body{
 .tulip:nth-child(8){left:22%; top:10%;}
 
 /* ================= CARD ================= */
+#main, #success {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    z-index: 2;
+}
+
 #card{
-    position:relative;
-    z-index:2;
     background:var(--cream);
     border:4px solid var(--pink);
     padding:42px 30px;
-    width:90%;
+    width: 90%;
     max-width:420px;
     text-align:center;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
+    margin: auto; /* Dodatno osiguranje za centar */
 }
 
 /* ================= GIF ================= */
 .bear-gif{
     width:130px;
-    margin-bottom:26px;
+    margin:0 auto 26px;
 }
 
 .bear-gif img{
     width:100%;
+    display: block;
 }
 
 /* ================= TEXT ================= */
@@ -111,20 +119,18 @@ button{
     border:none;
     cursor:pointer;
     padding:10px 14px;
+    outline: none;
+    -webkit-tap-highlight-color: transparent; /* Uklanja plavi krug pri kliku na mobu */
 }
 
 #yesBtn{ color:var(--green); }
 #noBtn{ color:var(--dark-pink); }
 
 /* ================= SUCCESS ================= */
-.hidden{ display:none; }
+.hidden{ display:none !important; }
 
 .success{
     animation:popIn .4s ease-out;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
 }
 
 @keyframes popIn{
@@ -143,16 +149,10 @@ button{
     letter-spacing:1px;
 }
 
-/* ================= MOBILE ================= */
+/* ================= MOBILE FIXES ================= */
 @media (max-width: 480px){
-
-    body{
-        padding:10px; /* da se ne zalepi uz ekran */
-    }
-
     #card{
-        max-width:100%;
-        padding:20px;
+        padding:32px 20px;
     }
 
     .bear-gif{
@@ -162,12 +162,11 @@ button{
 
     h1{
         font-size:12px;
-        margin-bottom:24px;
+        margin-bottom:28px;
     }
 
     .buttons{
-        gap:16px;
-        flex-wrap:wrap;
+        gap:20px;
     }
 
     button{
@@ -183,7 +182,6 @@ button{
 
 <body>
 
-<!-- BACKGROUND TULIPS -->
 <div class="tulips">
     <div class="tulip"></div><div class="tulip"></div>
     <div class="tulip"></div><div class="tulip"></div>
@@ -191,35 +189,26 @@ button{
     <div class="tulip"></div><div class="tulip"></div>
 </div>
 
-<!-- MAIN -->
-<div id="main" style="display:flex; justify-content:center; align-items:center; width:100%; height:100vh;">
+<div id="main">
     <div id="card">
-
         <div class="bear-gif">
             <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="cute bear">
         </div>
-
         <h1 id="question">WILL YOU BE<br>MY VALENTINE?</h1>
-
         <div class="buttons">
             <button id="yesBtn">YES</button>
             <button id="noBtn">NO</button>
         </div>
-
     </div>
 </div>
 
-<!-- SUCCESS -->
 <div id="success" class="hidden">
     <div id="card" class="success">
-
         <div class="bear-gif">
             <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="two bears">
         </div>
-
         <h1>JUPIIII💜</h1>
         <p>Vidimo se na žurci ''90! :)</p>
-
     </div>
 </div>
 
@@ -253,4 +242,3 @@ yesBtn.onclick = () => {
 
 </body>
 </html>
-
